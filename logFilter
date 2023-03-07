@@ -1,0 +1,20 @@
+#!/bin/bash
+input=$2
+key=${input%=*}
+value=${input#*=}
+method=""
+UserId=""
+if [[ key -eq "method" ]]; then
+	method=$value
+elif [[ key -eq "UserId" ]]; then
+	UserId=$value
+fi
+if [[ $1 -eq "-R" ]]; then
+	#remove
+	awk -v $input -v type=remove -f  awktest.awk input.txt > output.txt
+elif [[ $1 -eq "-A" ]]; then
+	#sort/show
+	awk -v $input -v type=sortshow -f  awktest.awk input.txt > output.txt
+else
+	echo "invalid inputs"
+fi
